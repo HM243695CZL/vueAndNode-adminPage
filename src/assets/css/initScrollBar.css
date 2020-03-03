@@ -1,0 +1,21 @@
+::-webkit-scrollbar-thumb {
+  height: 32px;
+  background: #d1d1d1;
+  outline-offset: 2px;
+  outline: 2px solid #fff;
+  border-radius: 6px;
+  border: 0px solid #fff;
+}
+
+::-webkit-scrollbar-thumb:HOVER {
+  background: #828282;
+}
+
+::-webkit-scrollbar-thumb:ACTIVE {
+  background: #747474;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 10px;
+}

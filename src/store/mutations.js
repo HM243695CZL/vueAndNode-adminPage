@@ -13,6 +13,9 @@ const mutations = {
   },
   setUserImg(state, userImg){
     state.userImg = userImg
+  },
+  setThisActiveComponent(state, name){
+    state.thisActiveComponent = name;
   }
 };
 export default mutations;

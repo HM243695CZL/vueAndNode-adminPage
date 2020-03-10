@@ -1,13 +1,13 @@
 <template>
   <div class="userList-container">
     <div class="btn-box">
+      <el-button type="primary" size="small" @click="openTab()">新增标签</el-button>
       <el-button type="primary" size="small" @click="addUser()">新增</el-button>
     </div>
     <el-table
       :data="userList"
       border
       height="440"
-      style="width: 98%"
     >
       <el-table-column
         prop="id"
@@ -73,6 +73,14 @@
       this.getUserList(this.page, this.limit);
     },
     methods: {
+      openTab(){
+        this.$taber.open({
+          name: "songLib",
+          params: {
+            title: "新增tab曲库"
+          }
+        })
+      },
       getUserList(page, limit) {
         this.$axios.get("/getUserList?page=" + page + "&limit=" + limit).then(res => {
           this.userList = res.data.data.result;

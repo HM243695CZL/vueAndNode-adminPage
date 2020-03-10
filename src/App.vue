@@ -1,19 +1,65 @@
 <template>
   <div id="app">
-    <router-view/>
+    <top-nav></top-nav>
+    <el-container>
+      <el-aside width="100px">
+        <side-menu></side-menu>
+      </el-aside>
+      <el-main>
+        <vue-tabs></vue-tabs>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
 <script>
+  import Hello from "./components/HelloWorld"
+  import SideMenu from "./components/SideMenu"
+  import TopNav from "./components/TopNav"
 export default {
   name: 'App',
-
+  components: {
+    Hello, SideMenu,TopNav
+  },
+  methods: {
+    dd(tab){
+      console.log(tab);
+    }
+  }
 }
 </script>
 
 <style scoped lang="less">
-  #app{
-    width: 100vw;
-    height: 100vh;
+  html, body {
+    padding: 0px;
+    margin: 0px;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  #app {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 9.15em;
+    overflow-y: hidden;
+    height: auto;
+    .el-aside{
+      position: fixed;
+      top: 60px;
+      left: 0;
+      bottom: 0;
+    }
+    .el-main{
+      position: fixed;
+      left: 100px;
+      top: 60px;
+      bottom: 0;
+      right: 0;
+      background: #F2F2F5;
+      padding: 0;
+      padding-top: 50px;
+    }
   }
 </style>

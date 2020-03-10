@@ -2,12 +2,14 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import router from './router'
+import VueTaber from "./VueTaber"
+// import router from './router'
 import "./assets/css/normalize.css"
 import "./assets/css/initScrollBar.css"
 import "font-awesome/css/font-awesome.css"
 import store from "./store"
 import axios from "axios"
+import tabs from "./tabs"
 import {
   Container, Header, Aside, Main, Menu,
   Submenu, MenuItem, Table, TableColumn, Button,
@@ -48,21 +50,34 @@ Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$notify = Notification;
 axios.defaults.baseURL = "http://localhost:3002";
+const vueTaber = new VueTaber({
+  tabs,
+  persist: false
+});
+vueTaber.beforeCreateEach((tab, next) => {
+  if(tab.name === "setting"){
+    next("home");
+  }else{
+    next();
+  }
+});
+Vue.use(VueTaber);
 // Vue.use(HGlobalPopup);
 //路由守卫
-router.beforeEach((to, from, next) => {
-  //无论刷新还是跳转，第一个进入的就是这个路由前置钩子函数
-  store.commit("setToken", localStorage.getItem("token"));
-  store.commit("setUsername", localStorage.getItem("username"));
-  store.commit("setUserId", localStorage.getItem("userId"));
-  store.commit("setUserImg", localStorage.getItem("userImg"));
-  store.commit("setPath", to.path);
-  next();
-});
+// router.beforeEach((to, from, next) => {
+//   //无论刷新还是跳转，第一个进入的就是这个路由前置钩子函数
+//   store.commit("setToken", localStorage.getItem("token"));
+//   store.commit("setUsername", localStorage.getItem("username"));
+//   store.commit("setUserId", localStorage.getItem("userId"));
+//   store.commit("setUserImg", localStorage.getItem("userImg"));
+//   store.commit("setPath", to.path);
+//   next();
+// });
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  router,
+  // router,
+  taber: vueTaber,
   store,
   components: { App },
   template: '<App/>'

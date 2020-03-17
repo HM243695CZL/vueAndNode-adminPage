@@ -181,7 +181,7 @@
     name: "IndexPage",
     data() {
       return {
-        loading: true,
+        instanceLoading: "",
         recommendList: {},
         aboutMeList: [],
         allData: [],
@@ -203,6 +203,7 @@
       this.getTodayData();
       this.getRecommendListCount();
       this.getAboutMe();
+      this.hideLoadingMask();
     },
     updated() {
       //当首页处于激活active状态时，重新请求数据
@@ -222,11 +223,15 @@
     methods: {
       //显示加载遮罩层
       showLoadingMask(){
-        Loading.service({
+        this.instanceLoading = this.$loading.service({
           lock: true,
           text: "正在加载...",
           spinner: "el-icon"
         })
+      },
+      //隐藏加载遮罩层
+      hideLoadingMask(){
+        this.instanceLoading.close();
       },
       //获取推荐列表的数据
       getRecommendListCount(){

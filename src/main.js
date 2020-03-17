@@ -10,12 +10,14 @@ import "font-awesome/css/font-awesome.css"
 import store from "./store"
 import axios from "axios"
 import tabs from "./tabs"
+import echarts from "echarts"
 import {
   Container, Header, Aside, Main, Menu,
   Submenu, MenuItem, Table, TableColumn, Button,
   Message, MessageBox, Input, Form, FormItem,
   Notification, Pagination, Upload, Dialog, Select,
-  Option, Avatar
+  Option, Avatar, Card, Row, Col,
+  Tooltip, Badge, DatePicker, Loading
 } from "element-ui";
 import 'element-ui/lib/theme-chalk/index.css';
 // import HGlobalPopup from "./components/GlobalPopup/index"
@@ -42,6 +44,13 @@ Vue.use(Dialog);
 Vue.use(Select);
 Vue.use(Option);
 Vue.use(Avatar);
+Vue.use(Card);
+Vue.use(Row);
+Vue.use(Col);
+Vue.use(Tooltip);
+Vue.use(Badge);
+Vue.use(DatePicker);
+Vue.use(Loading);
 // import setAxios from "./setAxios"
 // setAxios();
 Vue.prototype.$axios = axios;
@@ -49,7 +58,9 @@ Vue.prototype.$message = Message;
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$notify = Notification;
+Vue.prototype.$loading = Loading;
 axios.defaults.baseURL = "http://localhost:3002";
+Vue.prototype.$echarts = echarts;
 const vueTaber = new VueTaber({
   tabs,
   persist: false
@@ -63,16 +74,11 @@ vueTaber.beforeCreateEach((tab, next) => {
 });
 Vue.use(VueTaber);
 // Vue.use(HGlobalPopup);
-//路由守卫
-// router.beforeEach((to, from, next) => {
-//   //无论刷新还是跳转，第一个进入的就是这个路由前置钩子函数
-//   store.commit("setToken", localStorage.getItem("token"));
-//   store.commit("setUsername", localStorage.getItem("username"));
-//   store.commit("setUserId", localStorage.getItem("userId"));
-//   store.commit("setUserImg", localStorage.getItem("userImg"));
-//   store.commit("setPath", to.path);
-//   next();
-// });
+//获取浏览器的缓存，设置token、username、userId、userImg
+  store.commit("setToken", localStorage.getItem("token"));
+  store.commit("setUsername", localStorage.getItem("username"));
+  store.commit("setUserId", localStorage.getItem("userId"));
+  store.commit("setUserImg", localStorage.getItem("userImg"));
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -103,10 +103,10 @@
       }
     },
     mounted(){
-      this.getSong(this.page, this.limit);
+      this.getSongLib(this.page, this.limit);
     },
     methods: {
-      getSong(page, limit){
+      getSongLib(page, limit){
         this.$axios.get("/getSongLib?page=" + page + "&limit=" + limit).then( res => {
           this.songList = res.data.data.result;
           this.totalRow = res.data.totalRow;
@@ -145,7 +145,7 @@
                 message: "删除成功",
                 type: "success"
               });
-              this.getSong(this.page, this.limit);
+              this.getSongLib(this.page, this.limit);
             }else{
               this.$notify.error({
                 title: "错误",
@@ -175,14 +175,14 @@
       cancelEdit(flag) {
         this.showEditSongLib = false;
         if(flag){
-          this.getSong(this.page, this.limit);
+          this.getSongLib(this.page, this.limit);
         }
       },
       changeSize(val) {
-        this.getSong(this.page, val);
+        this.getSongLib(this.page, val);
       },
       changeCurrent(val) {
-        this.getSong(val, this.limit);
+        this.getSongLib(val, this.limit);
       }
     },
     components: {

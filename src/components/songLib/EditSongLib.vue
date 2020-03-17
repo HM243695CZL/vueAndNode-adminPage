@@ -64,17 +64,20 @@
           var type = this.form.id ? "1" : "0"; //1：修改 0：新增
           var file = this.$refs.uploadImg.files[0];
           var addParam = new FormData();
-          for (var i = 0; i < this.uploadFileList.length; i++){
-            addParam.append("songName", this.uploadFileList[i]);
+          if(type === "0"){
+            for (var i = 0; i < this.uploadFileList.length; i++){
+              addParam.append("songName", this.uploadFileList[i]);
+            }
+            addParam.append("type", type);
+            addParam.append("remark", this.form.remark || "");
+            addParam.append("songImg", file, file.name);
+          }else{
+            var editParam = {
+              id: this.form.id,
+              type: type,
+              remark: this.form.remark
+            };
           }
-          addParam.append("type", type);
-          addParam.append("remark", this.form.remark || "");
-          addParam.append("songImg", file, file.name);
-          var editParam = {
-            id: this.form.id,
-            type: type,
-            remark: this.form.remark
-          };
           var dataList = this.form.id ? editParam : addParam;
           this.$axios.post("/addSongLib", dataList).then( res => {
             if(res.data.status === 200){

@@ -92,6 +92,7 @@
       editListenListen(row){
         this.showEditListenListen = true;
         this.list = row;
+        this.list.listenType = row.typeValue;
       },
       delListenListen(row){
         this.$confirm("是否删除当前数据", "提示", {

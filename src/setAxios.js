@@ -9,7 +9,10 @@ export default function setAxios(){
   axios.interceptors.request.use(
     config => {
       if(store.state.token){
-        config.headers.Authorization = store.state.token;
+        config.headers = {
+          Authorization: store.state.token,
+          test: store.state.userId
+        }
       }
       return config;
     }

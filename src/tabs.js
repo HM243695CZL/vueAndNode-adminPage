@@ -1,3 +1,5 @@
+import IndexPage from "./components/IndexPage"
+
 import UserList from "./components/userList/UserList"
 import MyRecommend from "./components/myRecommend/myRecommend"
 import CreateSongList from "./components/createdSongList/CreatedSongList"
@@ -17,7 +19,17 @@ import Attention from "./components/attention/Attention"
 import VideoLib from "./components/videoLib/VideoLib"
 
 import SongLib from "./components/songLib/SongLib"
+
+import ConfigPath from "./components/configPath/ConfigPath"
+
+import * as constants from "./constants/constants.js"
 export default [
+  {
+   name: "indexPage",
+   title: "首页",
+   componentName: constants.INDEX_COMP_NAME,
+   component: IndexPage
+  },
   {
     name: "userList",
     title: "用户列表",
@@ -107,5 +119,11 @@ export default [
     title: "视频库",
     componentName: "VideoLib",
     component: VideoLib
+  },
+  {
+    name: "configPath",
+    title: "配置路径",
+    componentName: "ConfigPath",
+    component: ConfigPath
   }
 ]

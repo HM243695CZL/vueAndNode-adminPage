@@ -51,9 +51,6 @@
                 localStorage.setItem("userImg", res.data.data.userImg);
                 localStorage.setItem("userId", res.data.data.userId);
                 localStorage.setItem("token", res.data.data.token);
-                this.$router.replace({
-                  path: "/user_list"
-                })
               }
             })
           }

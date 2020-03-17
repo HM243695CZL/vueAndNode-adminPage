@@ -1,14 +1,19 @@
 <template>
   <div id="app">
-    <top-nav></top-nav>
-    <el-container>
-      <el-aside width="100px">
-        <side-menu></side-menu>
-      </el-aside>
-      <el-main>
-        <vue-tabs></vue-tabs>
-      </el-main>
-    </el-container>
+    <div class="app-container" v-if="this.$store.state.token">
+      <top-nav></top-nav>
+      <el-container>
+        <el-aside width="100px">
+          <side-menu></side-menu>
+        </el-aside>
+        <el-main>
+          <vue-tabs></vue-tabs>
+        </el-main>
+      </el-container>
+    </div>
+    <div class="app-container" v-else>
+      <login></login>
+    </div>
   </div>
 </template>
 
@@ -16,10 +21,11 @@
   import Hello from "./components/HelloWorld"
   import SideMenu from "./components/SideMenu"
   import TopNav from "./components/TopNav"
+  import Login from "./components/Login"
 export default {
   name: 'App',
   components: {
-    Hello, SideMenu,TopNav
+    Hello, SideMenu, TopNav, Login
   },
   methods: {
     dd(tab){
@@ -44,7 +50,11 @@ export default {
     right: 0;
     bottom: 9.15em;
     overflow-y: hidden;
-    height: auto;
+    height: 100vh;
+    .app-container{
+      width: 100%;
+      height: 100%;
+    }
     .el-aside{
       position: fixed;
       top: 60px;

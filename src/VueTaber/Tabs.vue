@@ -86,7 +86,6 @@ export default {
             }
         },
         clickTab (tab) {
-          this.$store.commit("setThisActiveComponent", tab.meta.componentName);
           console.log(this.$store.state.thisActiveComponent);
           const hooks = [...this.$taber.beforeCloseHooks]
           if (tab && !tab.active) {
@@ -189,6 +188,11 @@ export default {
             return this.tabMap[id]
         },
         select (tab) {
+          if(tab.meta.componentName === this.$store.state.compomentName){
+            //如果相等，则不调用函数重新赋值
+          }else{
+            this.$store.commit("setThisActiveComponent", tab.meta.componentName);
+          }
           if (!tab) {
                 return
             }

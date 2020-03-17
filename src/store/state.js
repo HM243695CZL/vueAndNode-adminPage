@@ -5,6 +5,6 @@ const state = {
   userId: "",
   userImg: "",
   url: "http://localhost:3002",
-  thisActiveComponent: "" //当前激活的组件
+  thisActiveComponent: "IndexPage" //当前激活的组件，默认首页
 };
 export default state;

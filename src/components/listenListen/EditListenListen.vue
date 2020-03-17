@@ -43,7 +43,7 @@
           }
       },
       mounted(){
-          this.getListenListenType();
+
       },
       props: ["list", "show"],
       methods: {
@@ -99,9 +99,9 @@
           "show": function(newVal){
             if(newVal){
               this.form = JSON.parse(JSON.stringify(this.list));
-              this.form.listenType = this.form.typeValue;
               this.uploadFileName = "";
               this.$refs.uploadFile.value = "";
+              this.getListenListenType();
             }
           }
       }

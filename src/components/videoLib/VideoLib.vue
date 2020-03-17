@@ -93,10 +93,10 @@
       }
     },
     mounted(){
-      this.getVideo(this.page, this.limit);
+      this.getVideoLib(this.page, this.limit);
     },
     methods: {
-      getVideo(page, limit){
+      getVideoLib(page, limit){
         this.$axios.get("/getVideoLib?page=" + page + "&limit=" + limit).then( res => {
           this.videoList = res.data.data.result;
           this.totalRow = res.data.totalRow;
@@ -135,7 +135,7 @@
                 message: "删除成功",
                 type: "success"
               });
-              this.getVideo(this.page, this.limit);
+              this.getVideoLib(this.page, this.limit);
             }else{
               this.$notify.error({
                 title: "错误",
@@ -150,14 +150,14 @@
       cancelEdit(flag){
         this.showEditVideo = false;
         if(flag){
-          this.getVideo(this.page, this.limit);
+          this.getVideoLib(this.page, this.limit);
         }
       },
       changeSize(val) {
-        this.getVideo(this.page, val);
+        this.getVideoLib(this.page, val);
       },
       changeCurrent(val) {
-        this.getVideo(val, this.limit);
+        this.getVideoLib(val, this.limit);
       }
     },
     components: {

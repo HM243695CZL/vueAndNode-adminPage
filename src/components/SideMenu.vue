@@ -16,6 +16,10 @@
   export default {
     data () {
       return {
+        indexPage: {
+          name: "indexPage",
+          text: "首页"
+        },
         menus: [
           {
             text: '我的',
@@ -116,6 +120,18 @@
                 name: "videoLib"
               }
             ]
+          },
+          {
+            text: "配置路径",
+            isSubShow: false,
+            iconName: "el-icon-user",
+            id: 5,
+            subItem: [
+              {
+                text: "配置路径",
+                name: "configPath"
+              }
+            ]
           }
         ],
         activeFlag: 0
@@ -134,7 +150,8 @@
       })
     },
     mounted(){
-
+      //加载首页
+      this.clickMenuItem(this.indexPage);
     },
     methods: {
       clickMenuItem (item) {

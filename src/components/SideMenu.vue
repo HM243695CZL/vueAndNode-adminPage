@@ -158,9 +158,7 @@
         this.selected = item.text;
         this.$taber.open({
           name: item.name,
-          params: {
-            title: item.text
-          }
+          title: item.text
         })
       },
       showToggle(item, index){

@@ -4,10 +4,10 @@ import install from './install'
 const allEvents = ['vue-tabs-close', 'vue-tabs-active-change'];
 export default class VueTaber {
     constructor (options) {
-        const {tabs: ops_tabs, persist} = options;
+      const {tabs: ops_tabs, persist} = options;
         this._tabsMap = {};
         ops_tabs.forEach((tab) => {
-            this._tabsMap[tab.name] = tab
+          this._tabsMap[tab.name] = tab
         });
 
         this.beforeCreateHooks = [];

@@ -53,6 +53,8 @@ Vue.use(DatePicker);
 Vue.use(Loading);
 // import setAxios from "./setAxios"
 // setAxios();
+// import setReqLoad from "./setReqLoad"
+// setReqLoad();
 Vue.prototype.$axios = axios;
 Vue.prototype.$message = Message;
 Vue.prototype.$msgbox = MessageBox;

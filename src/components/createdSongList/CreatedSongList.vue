@@ -80,10 +80,19 @@
         totalRow: 0
       }
     },
+    props: [],
     mounted(){
       this.getSongSheet(this.page, this.limit);
+      this.getParam();
     },
     methods: {
+      getParam(){
+        if(this._taber._vm.active.params){
+          console.log(this._taber._vm.active.params);
+        }else{
+          console.log("没有传递参数");
+        }
+      },
       getSongSheet(page, limit){
         this.$axios.get("/getSongSheet?page=" + page + "&limit=" + limit).then( res => {
           this.songSheetList = res.data.data.result;

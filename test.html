@@ -5,47 +5,10 @@
   <title>Title</title>
 </head>
 <body>
+<script src="./node_modules/moment/moment.js"></script>
 <script>
-  var configPath = [
-    {"path": "getUserList", "name": "用户列表", "value": 46},
-    {
-      "path": "getMyRecommend",
-      "name": "我的推荐",
-      "value": 25
-    }, {"path": "getSongSheet", "name": "创建歌单", "value": 12}, {
-      "path": "getSlidePic",
-      "name": "轮播图",
-      "value": 13
-    }, {"path": "getSlidePicType", "name": "轮播图类型", "value": 31}, {
-      "path": "getRecommendSong",
-      "name": "推荐歌单",
-      "value": 5
-    }, {"path": "getNewSong", "name": "新歌", "value": 4}, {
-      "path": "getCloudSelect",
-      "name": "云村精选",
-      "value": 5
-    }, {"path": "getSongLib", "name": "曲库", "value": 11}, {
-      "path": "getCloudRecommend",
-      "name": "云村推荐",
-      "value": 3
-    }, {"path": "getListenListenType", "name": "听听类型", "value": 48}, {
-      "path": "getListenListen",
-      "name": "听听",
-      "value": 11
-    }, {"path": "getSquare", "name": "广场", "value": 24}, {
-      "path": "getVideoLib",
-      "name": "视频库",
-      "value": 1
-    }, {"path": "getConfigPath", "name": "配置路径", "value": 2}
-  ];
-  var max = configPath.reduce((pre, curr) => {
-    return pre.value < curr.value ? curr : pre;
-  });
-  var min = configPath.reduce((pre, curr) => {
-    return pre.value > curr.value ? curr : pre;
-  });
-  console.log(max);
-  console.log(min);
+  var now = moment(new Date(1584527622557)).format("YYYY-MM-DD HH:mm:ss");
+  console.log(now);
 </script>
 </body>
 </html>

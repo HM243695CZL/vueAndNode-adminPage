@@ -9,28 +9,10 @@
             </div>
             <div class="body-content">
               <el-row :gutter="20">
-                <el-col :span="12">
-                  <div class="item">
-                    <div class="item-name">我的推荐</div>
-                    <div class="item-num">{{recommendList.myRecommendCount}}</div>
-                  </div>
-                </el-col>
-                <el-col :span="12">
-                  <div class="item">
-                    <div class="item-name">我的歌单</div>
-                    <div class="item-num">{{recommendList.mySongSheetCount}}</div>
-                  </div>
-                </el-col>
-                <el-col :span="12">
-                  <div class="item">
-                    <div class="item-name">听听</div>
-                    <div class="item-num">{{recommendList.listenListenCount}}</div>
-                  </div>
-                </el-col>
-                <el-col :span="12">
-                  <div class="item">
-                    <div class="item-name">新歌</div>
-                    <div class="item-num">{{recommendList.newSongCount}}</div>
+                <el-col :span="12" v-for="item in recommendList" :key="item.id">
+                  <div class="item" @click="openTab(item)">
+                    <div class="item-name">{{item.text}}</div>
+                    <div class="item-num">{{item.count || 0}}</div>
                   </div>
                 </el-col>
               </el-row>
@@ -112,7 +94,12 @@
     <div class="visit-info">
       <el-row :gutter="20">
         <el-col :span="16">
-          <el-card>
+          <el-card
+            v-loading="loadingDataTraffic"
+            element-loading-text="拼命加载中..."
+            element-loading-spinner="el-icon-loading"
+            element-loading-background="rgba(0, 0, 0, 0.8)"
+          >
             <div slot="header" class="card-title">
               <div class="title-count">
                 <div class="all-count">
@@ -144,7 +131,12 @@
           </el-card>
         </el-col>
         <el-col :span="8">
-          <el-card>
+          <el-card
+            v-loading="loadingTodayData"
+            element-loading-text="拼命加载中..."
+            element-loading-spinner="el-icon-loading"
+            element-loading-background="rgba(0, 0, 0, 0.8)"
+          >
             <div slot="header" class="card-title">
               <div class="title-count">
                 <div class="today-count">
@@ -154,6 +146,7 @@
                   <el-date-picker
                     v-model="dateValue"
                     type="date"
+                    @change="getTodayData"
                     placeholder="选择日期">
                   </el-date-picker>
                 </div>
@@ -181,8 +174,30 @@
     name: "IndexPage",
     data() {
       return {
-        instanceLoading: "",
-        recommendList: {},
+        loadingDataTraffic: true, //数据总览遮罩
+        loadingTodayData: true, //今日流量遮罩
+        recommendList: [
+          {
+            id: 1,
+            text: "我的推荐",
+            name: "myRecommend"
+          },
+          {
+            id: 2,
+            text: "我的歌单",
+            name: "createSongList"
+          },
+          {
+            id: 3,
+            text: "听听",
+            name: "listenListen"
+          },
+          {
+            id: 4,
+            text: "新歌",
+            name: "newSong"
+          }
+        ],
         aboutMeList: [],
         allData: [],
         totalRow: 0,
@@ -196,16 +211,17 @@
       }
     },
     created(){
-      this.showLoadingMask();
+
     },
     mounted() {
       this.getDataTraffic();
       this.getTodayData();
       this.getRecommendListCount();
       this.getAboutMe();
-      this.hideLoadingMask();
     },
     updated() {
+      /**
+       *
       //当首页处于激活active状态时，重新请求数据
       //函数防抖：触发事件后在 n 秒内函数只能执行一次，如果在 n 秒内又触发了事件，则会重新计算函数执行时间。
       if(this.timer){
@@ -219,24 +235,29 @@
           self.getTodayData();
         }
       }, 10);
+       */
     },
     methods: {
-      //显示加载遮罩层
-      showLoadingMask(){
-        this.instanceLoading = this.$loading.service({
-          lock: true,
-          text: "正在加载...",
-          spinner: "el-icon"
+      //打开详情界面
+      openTab(item){
+        this.$taber.open({
+          name: item.name,
+          params: {
+            title: item.text,
+            detailMsg: {
+              testName: "hm",
+              info: "请找一个满眼都是你的女孩子过一生"
+            }
+          }
         })
-      },
-      //隐藏加载遮罩层
-      hideLoadingMask(){
-        this.instanceLoading.close();
       },
       //获取推荐列表的数据
       getRecommendListCount(){
         this.$axios.get("/getRecommendListCount").then( res => {
-          this.recommendList = res.data.data.result;
+          this.recommendList[0].count = res.data.data.result.myRecommendCount;
+          this.recommendList[1].count = res.data.data.result.mySongSheetCount;
+          this.recommendList[2].count = res.data.data.result.listenListenCount;
+          this.recommendList[3].count = res.data.data.result.newSongCount;
         })
       },
       //获取与我相关的数据(云村推荐的接口)
@@ -247,7 +268,9 @@
       },
       //获取数据总览
       getDataTraffic() {
+        this.loadingDataTraffic = true;
         this.$axios.get("/getDataTraffic").then(res => {
+          this.loadingDataTraffic = false;
           var data = res.data.data.result;
           /**
            * 这里的maxPath和minPath不能使用对象的形式存储数据，不然会一直发送请求(不知道为什么)
@@ -263,6 +286,7 @@
       },
       //获取今日流量
       getTodayData(){
+        this.loadingTodayData = true;
         var startTime = moment(this.dateValue).format("YYYY-MM-DD 00:00:00");
         var endTime = moment(this.dateValue).format("YYYY-MM-DD 23:59:59");
         this.$axios.post("/TodayData", {
@@ -272,6 +296,7 @@
           var data = res.data.data.result;
           this.todayTotalTow = data.totalRow;
           this.renderTodayData(data);
+          this.loadingTodayData = false; //隐藏加载层
         });
       },
       //渲染数据总览-饼图
